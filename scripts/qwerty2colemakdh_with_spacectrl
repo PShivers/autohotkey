@@ -1,6 +1,7 @@
 #Requires AutoHotkey v2.0
-
-; AutoHotkey script to remap QWERTY to Colemak-DH layout
+#InstallKeybdHook
+#UseHook
+SetKeyDelay 0, 50
 
 ; Row 1
 $e::f
@@ -36,19 +37,17 @@ $CapsLock::Backspace
 
 $Space::
 {
-    ; KeyWait, "Space", "T0.1" waits for a quick release within 0.1 seconds (100 milliseconds).
-    ; If the key is released within this time, it's considered a "tap".
+    ; Wait up to 0.2 seconds for Space to be released
+    ; If released quickly (returns 1), it's a tap
     if KeyWait("Space", "T0.2")
     {
-        Send("{Space}")
+        Send "{Space}"
     }
-    ; If the key is not released within 0.2 seconds, it's considered a "hold".
+    ; If still held after 0.2 seconds (returns 0), it's a hold
     else
     {
-        ; Send the Control key down.
-        Send("{Control down}")
-        ; Wait for the Space key to be released before sending Control up.
-        KeyWait("Space")
-        Send("{Control up}")
+        Send "{Control down}"
+        KeyWait "Space"  ; Wait for release
+        Send "{Control up}"
     }
-} 
+}
