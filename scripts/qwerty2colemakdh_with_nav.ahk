@@ -1,7 +1,7 @@
 #Requires AutoHotkey v2.0
 InstallKeybdHook
 #UseHook
-SetKeyDelay 0, 50
+SendMode "Input"
 
 ; Row 1
 $e::f
